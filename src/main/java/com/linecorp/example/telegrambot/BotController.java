@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.HttpClient;
 import org.apache.http.HttpResponse;
 
@@ -28,10 +28,10 @@ public class BotController
         String url = "https://api.telegram.org/bot"+tToken+"/getupdates";
         
         HttpClient client = HttpClientBuilder.create().build();
-        HttpGet request = new HttpGet(url);
+        HttpPost post = new HttpPost(url);
         
         try{
-            HttpResponse response = client.execute(request);
+            HttpResponse response = client.execute(post);
             
             System.out.println("Response Code : "
                                + response.getStatusLine().getStatusCode());
