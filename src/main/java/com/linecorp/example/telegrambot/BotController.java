@@ -20,34 +20,12 @@ public class BotController
 {
     private final String tToken = "277622307:AAHumppdwKqfWxqgXzddyUukeTrF_zCNkWs";
     
-    @GetMapping(value="/callback")
-    public ResponseEntity<String> callback()
+    @PostMapping(value="/callback")
+    public ResponseEntity<String> callback(@RequestBody String aUpdate)
     {
         System.out.println("Webhook received");
         
-        String url = "https://api.telegram.org/bot"+tToken+"/getupdates";
-        
-        HttpClient client = HttpClientBuilder.create().build();
-        HttpPost post = new HttpPost(url);
-        
-        try{
-            HttpResponse response = client.execute(post);
-            
-            System.out.println("Response Code : "
-                               + response.getStatusLine().getStatusCode());
-            
-            BufferedReader rd = new BufferedReader(
-                                                   new InputStreamReader(response.getEntity().getContent()));
-            
-            StringBuffer result = new StringBuffer();
-            String line = "";
-            while ((line = rd.readLine()) != null) {
-                result.append(line);
-            }
-            System.out.println("Result: " + result);
-        } catch(IOException e) {
-            System.out.println("Exception raised");
-        }
+        System.out.println("Update: " + aUpdate)
         
         return new ResponseEntity<String>("Web is running", HttpStatus.OK);
     }
