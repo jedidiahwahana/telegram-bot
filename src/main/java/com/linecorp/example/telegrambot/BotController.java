@@ -45,6 +45,8 @@ public class BotController
         HttpClient client = HttpClientBuilder.create().build();
         HttpPost post = new HttpPost(url);
         
+        post.setHeader("Content-Type", "application/json");
+        
         List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
         urlParameters.add(new BasicNameValuePair("chat_id", Integer.toString(chatId)));
         urlParameters.add(new BasicNameValuePair("text", userText));
