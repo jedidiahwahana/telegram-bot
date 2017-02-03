@@ -38,7 +38,7 @@ public class BotController
         System.out.println("Message: " + jMessage);
         String userText = jMessage.getString("text");
         JSONObject jChat = jMessage.getJSONObject("chat");
-        String chatId = jChat.getString("id");
+        Int chatId = jChat.getInt("id");
         
         String url = "https://api.telegram.org/"+tToken+"/sendMessage";
         
