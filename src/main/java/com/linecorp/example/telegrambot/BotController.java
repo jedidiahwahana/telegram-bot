@@ -34,11 +34,11 @@ public class BotController
         System.out.println("Update: " + aUpdate);
         
         JSONObject jUpdate = new JSONObject(aUpdate);
-        JSONObject jMessage = new JSONObject(jUpdate.getJSONObject("message"));
+        JSONObject jMessage = jUpdate.getJSONObject("message");
         System.out.println("Message: " + jMessage);
-        String userText = jMessage.get("text").toString();
-        JSONObject jChat = new JSONObject(jMessage.getJSONObject("chat"));
-        String chatId = jChat.get("id").toString();
+        String userText = jMessage.getString("text");
+        JSONObject jChat = jMessage.getJSONObject("chat");
+        String chatId = jChat.getString("id");
         
         String url = "https://api.telegram.org/"+tToken+"/sendMessage";
         
