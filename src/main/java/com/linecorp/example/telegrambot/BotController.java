@@ -35,6 +35,7 @@ public class BotController
         
         JSONObject jUpdate = new JSONObject(aUpdate);
         JSONObject jMessage = new JSONObject(jUpdate.get("message"));
+        System.out.println("Message: " + jMessage);
         String userText = jMessage.get("text").toString();
         JSONObject jChat = new JSONObject(jMessage.get("chat"));
         String chatId = jChat.get("id").toString();
