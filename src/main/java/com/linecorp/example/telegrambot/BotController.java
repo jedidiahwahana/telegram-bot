@@ -9,6 +9,7 @@ import java.io.UnsupportedEncodingException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.*;
 
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.client.methods.HttpPost;
@@ -26,7 +27,9 @@ import org.json.JSONObject;
 @RequestMapping(value="/telegrambot")
 public class BotController
 {
-    private final String tToken = "277622307:AAHumppdwKqfWxqgXzddyUukeTrF_zCNkWs";
+    @Autowired
+    @Qualifier("com.telegram.token")
+    String tToken;
     
     @PostMapping(value="/callback")
     public ResponseEntity<String> callback(@RequestBody String aUpdate)
@@ -43,8 +46,6 @@ public class BotController
         int chatId = jChat.getInt("id");
         
         String url = "https://api.telegram.org/bot"+tToken+"/sendMessage";
-        
-        // https://api.telegram.org/
         
         HttpClient client = HttpClientBuilder.create().build();
         HttpPost post = new HttpPost(url);
