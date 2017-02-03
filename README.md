@@ -1,28 +1,53 @@
-# spring-hello #
+# telegram-bot #
 
-This repository demonstrates how to create a basic web application using Spring Framework.
+This repository demonstrates how to create an echo bot in Telegram with Spring Framework.
 
 ### How do I get set up? ###
 
-* Compile
- 
-    ```bash
-    $ gradle clean build
+* Make your bot with the [BotFather](https://telegram.me/botfather) and you will get token for your bot
+
+* Set your webhook
+
+	`$ curl -F "url=<your_webhook_url>" https://api.telegram.org/bot<token>/setWebhook`
+
+* Make request
+	`https://api.telegram.org/bot<token>/METHOD_NAME`
+
+* Get update
+
+    ```java
+    @PostMapping(value="/callback")
+    public ResponseEntity<String> callback(@RequestBody String aUpdate)
     ```
 
-* Run Server
+* Send messages
 
-    ```bash
-    $ gradle bootRun
-    ```
-
-* Use  
-    By default the server will serve at:
-    > http://localhost:8080/
-    
-    You can make the server greets your name by calling:
-    > http://localhost:8080/hello?name=\<your\_name\>
-
+	```java
+	String url = "https://api.telegram.org/bot"+tToken+"/sendMessage";
+        
+    HttpClient client = HttpClientBuilder.create().build();
+    HttpPost post = new HttpPost(url);
+        
+    post.setHeader("Content-Type", "application/json");
+        
+    try{
+    	StringEntity params = new StringEntity("{\"chat_id\":"+chatId+",\"text\":\""+userText+"\"}");
+        System.out.println("Parameter: " + params);
+        post.setEntity(params);
+        HttpResponse response = client.execute(post);
+        System.out.println("Response Code : "+response.getStatusLine().getStatusCode());
+            
+	    BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+            
+        StringBuffer result = new StringBuffer();
+        String line = "";
+        while ((line = rd.readLine()) != null) {
+                result.append(line);
+        }
+    } catch(IOException e){
+        System.out.println("Exception is raised");
+    }
+	```
 
 ### How do I contribute? ###
 
