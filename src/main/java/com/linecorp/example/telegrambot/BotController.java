@@ -4,6 +4,7 @@ package com.linecorp.example.telegrambot;
 import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.entity.StringEntity;
 
 import java.util.*;
 import org.json.JSONObject;
@@ -47,12 +49,10 @@ public class BotController
         
         post.setHeader("Content-Type", "application/json");
         
-        List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
-        urlParameters.add(new BasicNameValuePair("chat_id", Integer.toString(chatId)));
-        urlParameters.add(new BasicNameValuePair("text", userText));
-        
         try{
-            post.setEntity(new UrlEncodedFormEntity(urlParameters));
+            StringEntity params = new StringEntity("{\"chat_id\":"+chatId+",\"text\":\""+userText+"\"}");
+            System.out.println("Parameter: " + params);
+            post.setEntity(params);
             HttpResponse response = client.execute(post);
             System.out.println("Response Code : "
                                + response.getStatusLine().getStatusCode());
