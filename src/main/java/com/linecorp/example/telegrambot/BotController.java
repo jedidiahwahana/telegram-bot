@@ -25,7 +25,7 @@ public class BotController
     {
         System.out.println("Webhook received");
         
-        System.out.println("Update: " + aUpdate)
+        System.out.println("Update: " + aUpdate);
         
         return new ResponseEntity<String>("Web is running", HttpStatus.OK);
     }
